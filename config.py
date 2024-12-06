@@ -1,7 +1,7 @@
 from iracingdataapi.client import irDataClient
 from datetime import datetime, timedelta
 
-comealBotToken = 'Discord_SECRET'
+comealBotToken = os.environ['DISORD_SECRET']
 
 comealGuild = '823227580583772200'
 
