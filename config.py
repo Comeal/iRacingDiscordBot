@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 load_dotenv(dotenv_path='C:/Users/matth/PycharmProjects/iRacingDiscordBot/config.env')
 
 comealBotToken = os.getenv('Discord_SECRET')
-comealGuild = '823227580583772200'
+comealGuild = os.getenv('Comeal_GUILD')
 
-iracing_user = 'matthew130393@gmail.com'
+iracing_user = os.getenv('iRacing_USER')
 iracing_pass = os.getenv('iRacing_SECRET')
 
 def get_previous_tuesday():
