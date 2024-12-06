@@ -1,12 +1,14 @@
-from iracingdataapi.client import irDataClient
+import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
-comealBotToken = os.environ['DISORD_SECRET']
+load_dotenv(dotenv_path='C:/Users/matth/PycharmProjects/iRacingDiscordBot/config.env')
 
+comealBotToken = os.getenv('Discord_SECRET')
 comealGuild = '823227580583772200'
 
-iracing_user = "matthew130393@gmail.com"
-iracing_pass = "iRacing_SECRET"
+iracing_user = 'matthew130393@gmail.com'
+iracing_pass = os.getenv('iRacing_SECRET')
 
 def get_previous_tuesday():
     today = datetime.now()

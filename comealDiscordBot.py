@@ -1,11 +1,8 @@
-import os
 import discord
-import dotenv
 from discord.ext import commands
 from discord import app_commands
-from dotenv import load_dotenv
 from config import comealBotToken, comealGuild
-from iracingData import this_week_imsa_races, race_results
+from iRacingStats import race_results
 
 MY_GUILD = discord.Object(id=comealGuild)
 
@@ -34,9 +31,10 @@ async def on_ready():
 @client.tree.command(name='raceresults', description='Show the latest IMSA race GTP results')
 async def raceresults(interaction: discord.Interaction):
     try:
-        df = raceResults()
+        await interaction.response.defer()
+        df = race_results()
         if df.empty:
-            await interaction.response.send_message("No race results available.")
+            await interaction.followup.send("No race results available.")
             return
         # Create an embed
         embed = discord.Embed(
@@ -46,18 +44,19 @@ async def raceresults(interaction: discord.Interaction):
         )
         # Add fields for each driver
         for index, row in df.iterrows():
+            result = int(row['Result']) + 1
             driver_info = (
                 f"**Driver**: {row['Driver']}\n"
                 f"**Class**: {row['Class']}\n"
                 f"**Car**: {row['Car']}\n"
             )
-            embed.add_field(name=row['Result'], value=driver_info, inline=False)
+            embed.add_field(name=f"Position: {result}", value=driver_info, inline=False)
 
         # Send the embed
-        await interaction.response.send_message(embed=embed)
+        await interaction.followup.send(embed=embed)
 
     except Exception as e:
-        await interaction.response.send_message(f"Error: {e}")
+        await interaction.followup.send(f"Error: {e}")
 
 
 @client.tree.command()
